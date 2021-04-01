@@ -74,7 +74,7 @@ class CostMapManager(object):
         xlin, ylin = [np.linspace(b_min[i], b_max[i], N_grid[i]) for i in range(2)]
 
         data_arr = np.array(self._map_msg.data).reshape(N_grid).T
-        f_interp = itp.RegularGridInterpolator((xlin, ylin), data_arr, bounds_error=False, fill_value=np.inf)
+        f_interp = itp.RegularGridInterpolator((xlin, ylin), data_arr, bounds_error=False, fill_value=100)
         return f_interp, xlin, ylin
 
     def compute_cost(self, points):
@@ -110,6 +110,7 @@ if __name__=='__main__':
 
     rospy.init_node('overlap_finder')
     tf_listener = tf.TransformListener()
-    cmm = CostMapManager(tf_listener, world_frame="base_link")
+    #cmm = CostMapManager(tf_listener, world_frame="base_link") # for debugging
+    cmm = CostMapManager(tf_listener)
     rospy.spin()
     #cmm.debug_plot()

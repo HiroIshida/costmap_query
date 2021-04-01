@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import rospy
 from costmap_query.srv import ComputeCost, ComputeCostRequest, ComputeCostResponse
 from std_msgs.msg import Float32
