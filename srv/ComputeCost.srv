@@ -1,3 +1,4 @@
-geometry_msgs/PoseArray poses
+float32[] xarr
+float32[] yarr
 ---
-std_msgs/Float32MultiArray costs
+float32[] costs

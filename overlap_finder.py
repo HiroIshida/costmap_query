@@ -32,6 +32,7 @@ class CostMapManager(object):
         self._tf_listener = tf_listener
         self._world_frame = world_frame
         rospy.Subscriber(costmap_topic_name, OccupancyGrid, self._costmap_callback)
+        rospy.Service('compute_cost', ComputeCost, self.handle_compute_cost)
 
         # these two are obtained at the same moment
         self._map_msg = None
@@ -84,8 +85,12 @@ class CostMapManager(object):
         return costs
 
     def handle_compute_cost(self, req):
-        req.poses
-        return ComputeCostReponse()
+        xs = np.array(req.xarr)
+        ys = np.array(req.yarr)
+        points = np.vstack((xs, ys)).T
+        costs = self.compute_cost(points)
+        res = ComputeCostResponse(costs=costs.tolist())
+        return res
 
     def debug_plot(self):
         N_grid = np.array([100, 100])
